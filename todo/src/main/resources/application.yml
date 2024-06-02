@@ -1,0 +1,22 @@
+# Common configuration properties applicable to all profiles
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/todo
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+
+# Profile-specific configurations
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
