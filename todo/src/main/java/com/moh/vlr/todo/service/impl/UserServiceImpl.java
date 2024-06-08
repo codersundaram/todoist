@@ -9,6 +9,7 @@ import com.moh.vlr.todo.repository.UserRepository;
 import com.moh.vlr.todo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO addUser(UserDTO request) {
         User user = mapper.toEntity(request);
         Optional<User> isEmailExist = repository.findByEmail(request.getEmail());
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO updateUser(Long userId, UserDTO request) {
         Optional<User> userExist = repository.findById(userId);
         if(userExist.isEmpty()){
@@ -63,6 +66,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUserById(Long userId) {
         repository.deleteUserByUserId(userId);
     }

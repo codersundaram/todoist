@@ -19,6 +19,7 @@ public class Task {
     private String description;
     @Column(name = "due_date")
     private LocalDateTime dueDate;
+    @Column(name = "completed_date")
     private LocalDateTime completedDate;
     @Column(name = "created_at")
     private LocalDateTime createdAt;

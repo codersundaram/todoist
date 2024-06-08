@@ -9,6 +9,7 @@ import com.moh.vlr.todo.repository.CategoryRepository;
 import com.moh.vlr.todo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDTO addCategory(CategoryDTO request) {
         Category category = mapper.toEntity(request);
         Optional<Category> categoryExist = repository.findByNameIgnoreCase(category.getName());
@@ -38,6 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDTO updateCategory(Long categoryId, CategoryDTO request) {
         Category category = mapper.toEntity(request);
         Category c = repository.findByCategoryId(categoryId)
@@ -81,6 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Long categoryId) {
         repository.deleteByCategoryId(categoryId);
     }
