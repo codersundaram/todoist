@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class TaskResponse {
 
-    private String taskId;
+    private Long taskId;
     private String title;
 
     private String description;
@@ -18,8 +18,8 @@ public class TaskResponse {
 
     private LocalDateTime dueDate;
     private LocalDateTime completedDate;
-    private User user;
-    private Set<Category> categories;
+    private UserResponse user;
+    private Set<CategoryResponse> categories;
 
     public String getTitle() {
         return title;
@@ -61,19 +61,27 @@ public class TaskResponse {
         this.completedDate = completedDate;
     }
 
-    public User getUser() {
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    public UserResponse getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserResponse user) {
         this.user = user;
     }
 
-    public Set<Category> getCategories() {
+    public Set<CategoryResponse> getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(Set<CategoryResponse> categories) {
         this.categories = categories;
     }
 }
