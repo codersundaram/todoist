@@ -4,6 +4,7 @@ import com.moh.vlr.todo.dto.TaskDTO;
 import com.moh.vlr.todo.dto.TaskResponse;
 import com.moh.vlr.todo.entity.Task;
 import com.moh.vlr.todo.service.TaskService;
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class TaskController {
     }
 
     @PostMapping("")
-    public ResponseEntity<TaskDTO> addTask(@RequestBody TaskDTO request){
+    public ResponseEntity<TaskDTO> addTask(@Valid @RequestBody TaskDTO request){
         return new ResponseEntity<>(service.addTask(request), HttpStatus.OK);
     }
 }

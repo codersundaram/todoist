@@ -4,6 +4,7 @@ import com.moh.vlr.todo.dto.TaskDTO;
 import com.moh.vlr.todo.dto.TaskResponse;
 import com.moh.vlr.todo.entity.Category;
 import com.moh.vlr.todo.entity.Task;
+import com.moh.vlr.todo.entity.User;
 import com.moh.vlr.todo.exception.ResourceNotFoundException;
 import com.moh.vlr.todo.mapper.Task1Mapper;
 import com.moh.vlr.todo.mapper.TaskMapper;
@@ -15,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,19 +45,27 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public TaskDTO addTask(TaskDTO request) {
        Task task = mapper.toEntity(request);
+       task.setCreatedAt(LocalDateTime.now());
         task.setUser(userRepository.findById(request.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User not found")));
         Set<Category> categories = request.getCategoryIds().stream()
                 .map(categoryId -> categoryRepository.findByCategoryId(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category not found")))
                 .collect(Collectors.toSet());
         task.setCategories(categories);
         repository.save(task);
-        TaskResponse response = new TaskResponse();
-        response.setCategories(task.getCategories());
-        response.setUser(task.getUser());
+        Optional<User> user = userRepository.findById(task.getUser().getUserId());
+        if(user.isEmpty()){
+            throw new ResourceNotFoundException("User does not exist");
+        }
+        //Category category = categoryRepository.findByCategoryId();
+        TaskDTO response = new TaskDTO();
+        //response.setCategories(task.getCategories());
+        response.setUser(user.get());
         response.setDescription(task.getDescription());
         response.setTitle(task.getTitle());
         response.setDueDate(task.getDueDate());
-        task1Mapper.toTaskDTO(task);
-        return task1Mapper.toTaskDTO(task);
+        response.setStatus(task.getStatus());
+        response.setTaskId(task.getTaskId());
+       // task1Mapper.toTaskDTO(task);
+        return response;
     }
 }

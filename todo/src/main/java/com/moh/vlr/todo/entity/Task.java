@@ -17,10 +17,13 @@ public class Task {
     private Long taskId;
     private String title;
     private String description;
+    @Column(name = "due_date")
     private LocalDateTime dueDate;
     private LocalDateTime completedDate;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @Column(name = "status")
     private String status;
 
     @ManyToOne
